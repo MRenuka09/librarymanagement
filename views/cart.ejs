@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Cart</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+
+
+<header class="bg-blue-600 text-white p-4 shadow-md flex justify-between items-center">
+    <h1 class="text-2xl font-semibold">🛒 Your Cart</h1>
+    <nav>
+        <a href="index.html" class="mx-4 hover:underline">🏠 Home</a>
+        <a id="checkoutButton" href="#" class="mx-4 bg-green-500 px-4 py-2 rounded text-white hover:bg-green-600">
+            💳 Proceed to Payment
+        </a>
+    </nav>
+</header>
+
+<main class="max-w-4xl mx-auto mt-8 p-6 bg-white shadow-md rounded-lg">
+    <ul id="cart-list" class="space-y-4"></ul>
+    <p class="text-xl font-semibold mt-6">Total: ₹<span id="cart-total" class="text-green-600">0</span></p>
+
+    <div class="mt-6 flex justify-between">
+        <button onclick="clearCart()" class="bg-red-500 text-white px-6 py-2 rounded hover:bg-red-600">
+            🗑 Clear Cart
+        </button>
+        <a id="checkoutButton2" href="#" class="bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600">
+            💰 Checkout
+        </a>
+    </div>
+</main>
+
+<script>
+    let cartList = document.getElementById("cart-list");
+    let cartTotal = document.getElementById("cart-total");
+    let checkoutButton = document.getElementById("checkoutButton");
+    let checkoutButton2 = document.getElementById("checkoutButton2");
+
+    function getCart() {
+        return JSON.parse(localStorage.getItem("cart")) || [];
+    }
+
+    function saveCart(cart) {
+        localStorage.setItem("cart", JSON.stringify(cart));
+    }
+
+    function displayCart() {
+        let cart = getCart();
+        cartList.innerHTML = "";
+        let total = 0;
+
+        if (cart.length === 0) {
+            cartList.innerHTML = `<p class="text-gray-500 text-center">Your cart is empty 🛒</p>`;
+            cartTotal.textContent = 0;
+            updateCheckoutLink(0);
+            return;
+        }
+
+        cart.forEach((item, index) => {
+            let li = document.createElement("li");
+            li.className = "flex justify-between items-center bg-gray-100 p-4 rounded-lg shadow-sm";
+            li.innerHTML = `
+                <div class="flex items-center">
+                    <img src="${item.image}" alt="${item.title}" class="w-16 h-20 object-cover rounded">
+                    <div class="ml-4">
+                        <p class="font-semibold">${item.title}</p>
+                        <p class="text-gray-600">₹${item.price}</p>
+                    </div>
+                </div>
+                <button onclick="removeFromCart(${index})" class="bg-red-400 text-white px-3 py-1 rounded hover:bg-red-500">
+                    ❌ Remove
+                </button>
+            `;
+            total += item.price;
+            cartList.appendChild(li);
+        });
+
+        cartTotal.textContent = total;
+        updateCheckoutLink(total);
+    }
+
+    function updateCheckoutLink(total) {
+        let paymentURL = `/payment?amount=${encodeURIComponent(total.toFixed(2))}`;
+        checkoutButton.href = paymentURL;
+        checkoutButton2.href = paymentURL;
+    }
+
+    function removeFromCart(index) {
+        let cart = getCart();
+        cart.splice(index, 1);
+        saveCart(cart);
+        displayCart();
+    }
+
+    function clearCart() {
+        localStorage.removeItem("cart");
+        displayCart();
+    }
+
+    displayCart();
+</script>
+
+</body>
+</html>

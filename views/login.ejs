@@ -7,14 +7,63 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100 flex items-center justify-center h-screen">
+
 <div class="bg-white p-8 rounded-lg shadow-lg w-96">
     <h2 class="text-2xl font-bold text-center mb-4">Login</h2>
-    <form action="/login" method="POST">
-        <input type="text" name="username" placeholder="Username" class="w-full p-2 border rounded mb-2">
-        <input type="password" name="password" placeholder="Password" class="w-full p-2 border rounded mb-2">
-        <button type="submit" class="w-full bg-blue-500 text-white p-2 rounded">Login</button>
+
+  
+    <p id="errorMessage" class="text-red-500 text-center hidden">Invalid email or password</p>
+
+    <form id="loginForm" class="space-y-4">
+        <input type="email" id="email" name="email" placeholder="Email"
+               class="w-full p-2 border rounded focus:outline-none focus:ring focus:ring-blue-300" required>
+
+        <input type="password" id="password" name="password" placeholder="Password"
+               class="w-full p-2 border rounded focus:outline-none focus:ring focus:ring-blue-300" required>
+
+        <button type="submit"
+                class="w-full bg-blue-500 hover:bg-blue-600 text-white p-2 rounded transition">
+            Login
+        </button>
     </form>
-    <p class="text-center mt-4">Don't have an account? <a href="/register" class="text-blue-500">Register</a></p>
+
+    <p class="text-center mt-4">Don't have an account?
+        <a href="/register" class="text-blue-500 hover:underline">Register</a>
+    </p>
 </div>
+
+
+<script>
+    document.getElementById("loginForm").addEventListener("submit", async function (event) {
+        event.preventDefault(); 
+
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+        const errorMessage = document.getElementById("errorMessage");
+
+        try {
+            const response = await fetch("/login", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email, password })
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                localStorage.setItem("isLoggedIn", "true"); 
+                window.location.href = "/"; 
+            } else {
+                errorMessage.textContent = data.error;
+                errorMessage.classList.remove("hidden");
+            }
+        } catch (error) {
+            console.error("Login failed:", error);
+            errorMessage.textContent = "Something went wrong!";
+            errorMessage.classList.remove("hidden");
+        }
+    });
+</script>
+
 </body>
 </html>

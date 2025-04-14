@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Payment</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+
+
+<nav class="bg-blue-600 text-white p-4 flex justify-between items-center shadow-md">
+    <h1 class="text-2xl font-bold">Gram Panchayat Information System</h1>
+    <div class="space-x-4">
+        <a href="/" class="hover:underline">Home</a>
+        <a href="/taxes" class="hover:underline">Taxes</a>
+        <a href="/library" class="hover:underline">Library</a>
+        <a href="/contact" class="hover:underline">Contact</a>
+        <a href="/cart" class="hover:underline">🛒 Cart</a>
+    </div>
+</nav>
+
+
+<main class="flex justify-center items-center h-screen">
+    <div class="bg-white p-8 rounded-lg shadow-lg w-96 text-center">
+        <h2 class="text-3xl font-bold mb-4 text-gray-800">Checkout</h2>
+
+       
+        <p class="text-lg text-gray-600">Total Amount to Pay</p>
+        <p id="amount" class="text-4xl font-extrabold text-blue-600 mt-2">₹0.00</p> 
+
+        <h3 class="text-lg font-semibold mt-6 text-gray-700">Choose Payment Method</h3>
+        <select id="payment-method" class="w-full p-3 border rounded mt-2 focus:ring focus:ring-blue-300">
+            <option value="credit-card">💳 Credit Card</option>
+            <option value="upi">📲 UPI</option>
+            <option value="paypal">💰 PayPal</option>
+            <option value="bank-transfer">🏦 Bank Transfer</option>
+        </select>
+
+        <button onclick="confirmPayment()" class="w-full bg-green-500 text-white p-3 rounded mt-6 font-semibold hover:bg-green-700 transition">
+            ✅ Pay Now
+        </button>
+
+        <p class="text-sm text-gray-500 mt-4">Secure and encrypted payment gateway</p>
+    </div>
+</main>
+
+
+<script>
+   
+    function checkLogin() {
+        let isLoggedIn = localStorage.getItem("userLoggedIn");
+
+        if (isLoggedIn !== "true") {
+            alert("You need to log in to proceed with the payment.");
+            window.location.href = `/login?redirect=${encodeURIComponent(window.location.href)}`;
+        }
+    }
+
+  
+    function getQueryParameter(name) {
+        const params = new URLSearchParams(window.location.search);
+        return params.get(name);
+    }
+
+    function displayAmount() {
+        let amount = getQueryParameter("amount");
+
+
+        if (!amount || isNaN(amount) || parseFloat(amount) <= 0) {
+            amount = "0.00";
+        } else {
+            amount = parseFloat(amount).toFixed(2);
+        }
+
+        document.getElementById("amount").innerText = `₹${amount}`;
+    }
+
+    
+    function confirmPayment() {
+        alert("✅ Payment Successful!");
+        window.location.href = "/";
+    }
+
+   
+    document.addEventListener("DOMContentLoaded", function () {
+        checkLogin();
+        displayAmount();
+    });
+</script>
+
+</body>
+</html>

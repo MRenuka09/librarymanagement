@@ -1,0 +1,51 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: antiquewhite;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+nav a {
+    margin: 0 15px;
+    text-decoration: none;
+    color: blue;
+    font-weight: bold;
+}
+
+.book-list {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.book {
+    border: 1px solid blue;
+    padding: 10px;
+    width: 200px;
+    text-align: center;
+    background-color: #e6f2ff; /* Added missing semicolon */
+}
+
+.book img {
+    width: 100%; /* Make the image take the full width of the book container */
+    height: auto; /* Maintain the aspect ratio */
+    max-height: 250px; /* Set a maximum height for the image */
+    object-fit: cover; /* Ensure the image covers the area without distortion */
+}
+
+button {
+    background-color: blue;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: darkblue;
+}

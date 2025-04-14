@@ -1,0 +1,92 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Wealth Tax - Gram Panchayat</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+    </head>
+    <body class="bg-gray-100">
+    <nav class="bg-blue-600 text-white p-4 flex justify-between items-center shadow-md">
+        <h1 class="text-2xl font-bold">Gram Panchayat Information System</h1>
+        <div>
+            <a href="#" class="px-4 hover:underline">Home</a>
+            <a href="#" class="px-4 hover:underline">Taxes</a>
+            <a href="#" class="px-4 hover:underline">Library</a>
+            <a href="#" class="px-4 hover:underline">Contact</a>
+        </div>
+    </nav>
+
+    <header class="bg-blue-500 text-white text-center py-10">
+        <h2 class="text-3xl font-semibold">Wealth Tax Management</h2>
+        <p class="text-lg mt-2">Calculate and manage your wealth tax easily.</p>
+    </header>
+
+    <section class="container mx-auto p-6">
+        <div class="bg-white p-6 rounded-lg shadow-lg">
+            <h3 class="text-xl font-bold text-gray-700">What is Wealth Tax?</h3>
+            <p class="text-gray-600 mt-2">Wealth tax is levied on the value of certain assets owned by individuals and entities.</p>
+        </div>
+
+        <div class="bg-white p-6 rounded-lg shadow-lg mt-6">
+            <h3 class="text-xl font-bold text-gray-700">Enter Your Details</h3>
+            <p class="text-gray-600 mt-2">Please enter the required details to calculate your wealth tax.</p>
+            <form id="wealthTaxForm" class="mt-4">
+                <label class="block text-gray-700">Total Assets Value (in INR):</label>
+                <input type="number" id="assets_value" class="w-full p-2 border rounded mb-4" required>
+
+                <label class="block text-gray-700">Exempted Value (in INR):</label>
+                <input type="number" id="exempted_value" class="w-full p-2 border rounded mb-4" required>
+
+                <button type="button" onclick="calculateWealthTax()" class="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-700">
+                    Calculate Tax
+                </button>
+            </form>
+        </div>
+
+        <div id="taxResult" class="bg-white p-6 rounded-lg shadow-lg mt-6 hidden">
+            <h3 class="text-xl font-bold text-gray-700">Calculated Wealth Tax</h3>
+            <p class="text-gray-600 mt-2">Your estimated wealth tax is:</p>
+            <p id="wealthTaxAmount" class="text-2xl font-bold text-blue-500 mt-4"></p>
+        </div>
+
+        <div id="payNowSection" class="bg-white p-6 rounded-lg shadow-lg mt-6 hidden">
+            <h3 class="text-xl font-bold text-gray-700">Pay Your Wealth Tax</h3>
+            <p class="text-gray-600 mt-2">Ensure timely payment to avoid penalties.</p>
+            <a id="payNowButton" href="#" class="mt-4 inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">
+                Pay Now
+            </a>
+        </div>
+    </section>
+
+    <footer class="bg-gray-800 text-white text-center py-4 mt-10">
+        <p>© 2025 Gram Panchayat | All Rights Reserved</p>
+    </footer>
+
+    <script>
+        function calculateWealthTax() {
+            let assetsValue = parseFloat(document.getElementById('assets_value').value);
+            let exemptedValue = parseFloat(document.getElementById('exempted_value').value);
+
+            let taxableWealth = Math.max(0, assetsValue - exemptedValue);
+            let taxRate = 0.01; // 1% wealth tax
+            let wealthTax = taxableWealth * taxRate;
+            
+            document.getElementById('wealthTaxAmount').innerText = `₹${wealthTax.toFixed(2)}`;
+            document.getElementById('taxResult').classList.remove('hidden');
+            document.getElementById('payNowSection').classList.remove('hidden');
+            
+            localStorage.setItem("calculatedWealthTax", wealthTax.toFixed(2));
+            
+            let isLoggedIn = localStorage.getItem("userLoggedIn");
+            let paymentUrl = `/payment?amount=${encodeURIComponent(wealthTax.toFixed(2))}`;
+            
+            if (isLoggedIn === "true") {
+                document.getElementById('payNowButton').href = paymentUrl;
+            } else {
+                document.getElementById('payNowButton').href = `/login?redirect=${encodeURIComponent(paymentUrl)}`;
+            }
+        }
+    </script>
+    </body>
+    </html>

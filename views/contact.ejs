@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grievance & Support - Gram Panchayat</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+    <nav class="bg-blue-600 text-white p-4 flex justify-between items-center shadow-md">
+        <h1 class="text-2xl font-bold">Gram Panchayat Information System</h1>
+        <div>
+            <a href="/" class="px-4 hover:underline">Home</a>
+            <a href="/" class="px-4 hover:underline">Taxes</a>
+            <a href="/library" class="px-4 hover:underline">Library</a>
+            <a href="/contact" class="px-4 hover:underline">Contact</a>
+        </div>
+    </nav>
+
+    <header class="bg-blue-500 text-white text-center py-10">
+        <h2 class="text-3xl font-semibold">Grievance & Support</h2>
+        <p class="text-lg mt-2">Submit complaints and track their resolution.</p>
+    </header>
+
+    <section class="container mx-auto p-6">
+        <div class="bg-white p-6 rounded-lg shadow-lg">
+            <h3 class="text-xl font-bold text-gray-700">Lodge a Complaint</h3>
+            <p class="text-gray-600 mt-2">Report tax issues, water supply problems, or library service concerns.</p>
+            <form id="grievanceForm" class="mt-4">
+                <label class="block text-gray-700">Full Name:</label>
+                <input type="text" id="name" class="w-full p-2 border rounded mb-4" required>
+
+                <label class="block text-gray-700">Email:</label>
+                <input type="email" id="email" class="w-full p-2 border rounded mb-4" required>
+
+                <label class="block text-gray-700">Category:</label>
+                <select id="category" class="w-full p-2 border rounded mb-4" required>
+                    <option value="Tax Issue">Tax Issue</option>
+                    <option value="Water Supply">Water Supply</option>
+                    <option value="Library Service">Library Service</option>
+                    <option value="Other">Other</option>
+                </select>
+
+                <label class="block text-gray-700">Complaint Details:</label>
+                <textarea id="details" class="w-full p-2 border rounded mb-4" rows="4" required></textarea>
+
+                <button type="button" onclick="submitComplaint()" class="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-700">
+                    Submit Complaint
+                </button>
+            </form>
+        </div>
+
+        <!-- <div class="bg-white p-6 rounded-lg shadow-lg mt-6">
+            <h3 class="text-xl font-bold text-gray-700">Track Complaint</h3>
+            <input type="text" id="trackingId" placeholder="Enter Tracking ID" class="w-full p-2 border rounded mt-2">
+            <button onclick="trackComplaint()" class="w-full bg-green-500 text-white p-2 rounded mt-2 hover:bg-green-700">
+                Track Complaint
+            </button>
+            <p id="statusResult" class="text-gray-700 mt-2"></p>
+        </div>
+
+        <div class="bg-white p-6 rounded-lg shadow-lg mt-6">
+            <h3 class="text-xl font-bold text-gray-700">Your Complaints</h3>
+            <button onclick="getComplaints()" class="w-full bg-gray-500 text-white p-2 rounded mt-2 hover:bg-gray-700">
+                View Complaints
+            </button>
+            <ul id="complaintList" class="mt-4"></ul>
+        </div> -->
+
+        <div class="bg-white p-6 rounded-lg shadow-lg mt-6">
+            <h3 class="text-xl font-bold text-gray-700">Contact Support</h3>
+            <p class="text-gray-600 mt-2">Need help? Reach out to our support team.</p>
+            <ul class="mt-4">
+                <li class="text-gray-700"><strong>📞 Phone:</strong> +91 98765 43210</li>
+                <li class="text-gray-700"><strong>📧 Email:</strong> support@grampanchayat.com</li>
+            </ul>
+        </div>
+    </section>
+
+    <footer class="bg-gray-800 text-white text-center py-4 mt-10">
+        <p>© 2025 Gram Panchayat | All Rights Reserved</p>
+    </footer>
+
+    <script>
+        function submitComplaint() {
+            const name = document.getElementById("name").value;
+            const email = document.getElementById("email").value;
+            const category = document.getElementById("category").value;
+            const details = document.getElementById("details").value;
+
+            fetch("http://localhost:5000/submit-complaint", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ name, email, category, details })
+            })
+            .then(response => response.json())
+            .then(data => alert(`Complaint submitted successfully! Your tracking ID is: ${data.trackingId}`))
+            .catch(error => console.error("Error:", error));
+
+            document.getElementById("grievanceForm").reset();
+        }
+
+        function getComplaints() {
+            const name = document.getElementById("name").value;
+
+            fetch(`http://localhost:5000/get-complaints/${name}`)
+            .then(response => response.json())
+            .then(data => {
+                const list = document.getElementById("complaintList");
+                list.innerHTML = data.length
+                    ? data.map(c => `<li>${c.trackingId} - ${c.category} - ${c.status}</li>`).join("")
+                    : "<p>No complaints found.</p>";
+            })
+            .catch(error => console.error("Error:", error));
+        }
+
+        function trackComplaint() {
+            const trackingId = document.getElementById("trackingId").value;
+            document.getElementById("statusResult").innerText = "Status: In Progress";
+        }
+    </script>
+</body>
+</html>

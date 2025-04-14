@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>House Tax - Gram Panchayat</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+<nav class="bg-blue-600 text-white p-4 flex justify-between items-center shadow-md">
+    <h1 class="text-2xl font-bold">Gram Panchayat Information System</h1>
+    <div>
+        <a href="/" class="px-4 hover:underline">Home</a>
+        <a href="/taxes" class="px-4 hover:underline">Taxes</a>
+        <a href="/library" class="px-4 hover:underline">Library</a>
+        <a href="/contact" class="px-4 hover:underline">Contact</a>
+    </div>
+</nav>
+
+<header class="bg-blue-500 text-white text-center py-10">
+    <h2 class="text-3xl font-semibold">House Tax Management</h2>
+    <p class="text-lg mt-2">Calculate and pay your house tax easily.</p>
+</header>
+
+<section class="container mx-auto p-6">
+    <div class="bg-white p-6 rounded-lg shadow-lg">
+        <h3 class="text-xl font-bold text-gray-700">What is House Tax?</h3>
+        <p class="text-gray-600 mt-2">House tax is levied on property owners for municipal services like roads, sewage, and lighting.</p>
+    </div>
+
+    <div class="bg-white p-6 rounded-lg shadow-lg mt-6">
+        <h3 class="text-xl font-bold text-gray-700">Enter Property Details</h3>
+        <p class="text-gray-600 mt-2">Fill in the details to calculate your house tax.</p>
+        <form id="taxForm" class="mt-4">
+            <label class="block text-gray-700">Property ID/Account Number:</label>
+            <input type="text" id="property_id" class="w-full p-2 border rounded mb-4" required>
+
+            <label class="block text-gray-700">Property Type:</label>
+            <select id="property_type" class="w-full p-2 border rounded mb-4" required>
+                <option value="residential">Residential</option>
+                <option value="commercial">Commercial</option>
+            </select>
+
+            <label class="block text-gray-700">Area (sq. ft.):</label>
+            <input type="number" id="area" class="w-full p-2 border rounded mb-4" required>
+
+            <label class="block text-gray-700">Annual Rental Value (₹):</label>
+            <input type="number" id="rental_value" class="w-full p-2 border rounded mb-4" required>
+
+            <button type="button" onclick="calculateTax()" class="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-700">Calculate Tax</button>
+        </form>
+    </div>
+
+    <div id="taxResult" class="bg-white p-6 rounded-lg shadow-lg mt-6 hidden">
+        <h3 class="text-xl font-bold text-gray-700">Calculated Tax</h3>
+        <p class="text-gray-600 mt-2">Your estimated house tax is:</p>
+        <p id="taxAmount" class="text-2xl font-semibold text-blue-600 mt-4"></p>
+    </div>
+
+    <div id="payNowSection" class="bg-white p-6 rounded-lg shadow-lg mt-6 hidden">
+        <h3 class="text-xl font-bold text-gray-700">Pay Your House Tax</h3>
+        <p class="text-gray-600 mt-2">Make timely payments to avoid penalties.</p>
+        <a id="payNowButton" href="/payment" class="mt-4 inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">
+            Pay Now
+        </a>
+    </div>
+</section>
+
+<footer class="bg-gray-800 text-white text-center py-4 mt-10">
+    <p>© 2025 Gram Panchayat | All Rights Reserved</p>
+</footer>
+
+<script>
+    function calculateTax() {
+        const propertyType = document.getElementById("property_type").value;
+        const area = parseFloat(document.getElementById("area").value);
+        const rentalValue = parseFloat(document.getElementById("rental_value").value);
+
+        if (isNaN(area) || isNaN(rentalValue)) {
+            alert("Please enter valid values for area and rental value.");
+            return;
+        }
+
+        let taxRate = propertyType === "residential" ? 0.10 : 0.15; // 10% for residential, 15% for commercial
+        let taxAmount = rentalValue * taxRate + (area * 2); // ₹2 per sq. ft. + rental tax
+
+        document.getElementById("taxAmount").innerText = `₹${taxAmount.toFixed(2)}`;
+
+        // Show result and "Pay Now" button
+        document.getElementById("taxResult").classList.remove("hidden");
+        document.getElementById("payNowSection").classList.remove("hidden");
+
+        // ✅ Set payment link to include tax amount
+        let paymentUrl = `/payment?category=house-tax&amount=${encodeURIComponent(taxAmount.toFixed(2))}`;
+        document.getElementById("payNowButton").href = paymentUrl;
+    }
+</script>
+</body>
+</html>

@@ -7,49 +7,100 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100">
-    <nav class="bg-blue-600 text-white p-4 flex justify-between items-center shadow-md">
-        <h1 class="text-2xl font-bold">Gram Panchayat Information System</h1>
-        <div>
-            <a href="#" class="px-4 hover:underline">Home</a>
-            <a href="#" class="px-4 hover:underline">Taxes</a>
-            <a href="#" class="px-4 hover:underline">Library</a>
-            <a href="#" class="px-4 hover:underline">Contact</a>
-        </div>
+
+   
+    <nav class="bg-blue-800 text-white p-4 flex justify-between items-center shadow-lg fixed top-0 left-0 w-full z-10">
+        <h1 class="text-2xl font-bold tracking-wide">🏛 Gram Panchayat</h1>
+        <div id="nav-links" class="space-x-6 text-lg"></div>
     </nav>
 
-    <header class="bg-blue-500 text-white text-center py-10">
-        <h2 class="text-3xl font-semibold">Manage Taxes & Services Efficiently</h2>
-        <p class="text-lg mt-2">House Tax, Water Tax, Wealth Tax & Library Management</p>
+   
+    <header class="relative flex items-center justify-center text-center text-white shadow-lg"
+        style="background-image: url('/images/img1.jpg'); height: 550px; width: 100%; background-size: cover; background-position: center;">
+        <div class="absolute inset-0 bg-black bg-opacity-50"></div>
+        <div class="relative z-1 max-w-2xl">
+            <h2 class="text-5xl font-bold">Empowering Rural Governance</h2>
+            <p class="text-lg mt-3">A seamless platform to manage House Tax, Water Tax, Wealth Tax, and Library Services effortlessly.</p>
+            <a href="#services"
+                class="mt-6 inline-block bg-white text-blue-800 font-semibold px-6 py-3 rounded-lg shadow-md hover:bg-gray-200 transition duration-300">
+                Explore Services
+            </a>
+        </div>
     </header>
 
-    <section class="container mx-auto p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-x-[150px] gap-y-[80px] px-[200px]">
-        <div class="bg-white p-6 rounded-lg shadow-lg text-center">
-            <h3 class="text-xl font-bold text-gray-700">🏠 House Tax</h3>
-            <p class="text-gray-500 mt-2">Pay and manage property tax easily.</p>
-            <a href="#" class="mt-4 block text-blue-600 font-semibold hover:underline">View Details</a>
-        </div>
-
-        <div class="bg-white p-6 rounded-lg shadow-lg text-center">
-            <h3 class="text-xl font-bold text-gray-700">💧 Water Tax</h3>
-            <p class="text-gray-500 mt-2">Check and pay water supply charges.</p>
-            <a href="#" class="mt-4 block text-blue-600 font-semibold hover:underline">View Details</a>
-        </div>
-
-        <div class="bg-white p-6 rounded-lg shadow-lg text-center">
-            <h3 class="text-xl font-bold text-gray-700">💰 Wealth Tax</h3>
-            <p class="text-gray-500 mt-2">Manage wealth tax records securely.</p>
-            <a href="#" class="mt-4 block text-blue-600 font-semibold hover:underline">View Details</a>
-        </div>
-
-        <div class="bg-white p-6 rounded-lg shadow-lg text-center">
-            <h3 class="text-xl font-bold text-gray-700">📚 Library</h3>
-            <p class="text-gray-500 mt-2">Access and manage library memberships.</p>
-            <a href="#" class="mt-4 block text-blue-600 font-semibold hover:underline">View Details</a>
-        </div>
+    <section class="container mx-auto mt-16 px-6 text-center max-w-4xl">
+        <h3 class="text-3xl font-semibold text-gray-800">Transforming Local Administration</h3>
+        <p class="text-lg text-gray-600 mt-4 leading-relaxed">
+            Our digital initiative streamlines tax collection, library management, and administrative tasks for better governance. 
+            We aim to bridge the gap between technology and rural services, ensuring easy access and efficient management. 
+            With our modern platform, Gram Panchayats can now handle financial records, citizen services, and community resources 
+            with greater transparency and convenience.
+        </p>
     </section>
 
-    <footer class="bg-gray-800 text-white text-center py-4 mt-[200px] w-full">
-        <p>© 2025 Gram Panchayat | All Rights Reserved</p>
+   
+    <section id="services" class="container mx-auto p-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-12 px-[10%] mt-12">
+        
+       
+        <div class="bg-white p-8 rounded-xl shadow-lg text-center transform hover:scale-105 transition duration-300">
+            <h3 class="text-2xl font-semibold text-gray-800">📚 Library</h3>
+            <p class="text-gray-600 mt-2">Access and manage your library memberships with ease.</p>
+            <a href="/library" class="mt-4 inline-block text-white bg-blue-600 px-5 py-2 rounded-md font-medium hover:bg-blue-700 transition duration-300">View Details</a>
+        </div>
+
+        <div class="bg-white p-8 rounded-xl shadow-lg text-center transform hover:scale-105 transition duration-300">
+            <h3 class="text-2xl font-semibold text-gray-800">💧 Water Tax</h3>
+            <p class="text-gray-600 mt-2">Check and pay your water tax conveniently.</p>
+            <a href="/watertax" class="mt-4 inline-block text-white bg-blue-600 px-5 py-2 rounded-md font-medium hover:bg-blue-700 transition duration-300">View Details</a>
+        </div>
+
+        <div class="bg-white p-8 rounded-xl shadow-lg text-center transform hover:scale-105 transition duration-300">
+            <h3 class="text-2xl font-semibold text-gray-800">💰 Wealth Tax</h3>
+            <p class="text-gray-600 mt-2">Securely manage your wealth tax records.</p>
+            <a href="/wealthtax" class="mt-4 inline-block text-white bg-blue-600 px-5 py-2 rounded-md font-medium hover:bg-blue-700 transition duration-300">View Details</a>
+        </div>
+
+        <div class="bg-white p-8 rounded-xl shadow-lg text-center transform hover:scale-105 transition duration-300">
+            <h3 class="text-2xl font-semibold text-gray-800">🏠 House Tax</h3>
+            <p class="text-gray-600 mt-2">Easily pay and manage your property taxes.</p>
+            <a href="/housetax" class="mt-4 inline-block text-white bg-blue-600 px-5 py-2 rounded-md font-medium hover:bg-blue-700 transition duration-300">View Details</a>
+        </div>
+
+    </section>
+
+    <footer class="bg-gray-900 text-white text-center py-6 mt-16 w-full">
+        <p class="text-lg">&copy; 2025 Gram Panchayat | All Rights Reserved</p>
     </footer>
+
+    <script>
+        const isLoggedIn = localStorage.getItem("isLoggedIn");
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const navLinks = document.getElementById("nav-links");
+
+            let navHTML = `
+                <a href="#" class="hover:text-gray-200 transition duration-300">Home</a>
+                <a href="#" class="hover:text-gray-200 transition duration-300">Taxes</a>
+                <a href="/library" class="hover:text-gray-200 transition duration-300">Library</a>
+                <a href="/contact" class="hover:text-gray-200 transition duration-300">Contact</a>
+            `;
+
+            if (isLoggedIn) {
+                navHTML += `<a href="/logout" id="logout" class="hover:text-gray-200 transition duration-300">Logout</a>`;
+            } else {
+                navHTML += `<a href="/login" class="hover:text-gray-200 transition duration-300">Login</a>`;
+            }
+
+            navLinks.innerHTML = navHTML;
+
+            if (isLoggedIn) {
+                document.getElementById("logout").addEventListener("click", function () {
+                    localStorage.removeItem("isLoggedIn"); 
+                    window.location.reload(); 
+                });
+            }
+        });
+    </script>
+
 </body>
 </html>
