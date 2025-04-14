@@ -26,7 +26,7 @@ app.use(
 );
 
 app.get("/", (req, res) => {
-  res.send('Your site is live 🎉');
+  
   res.render("index", { user: req.session.user });
 });
 
