@@ -4,10 +4,10 @@ const path=require('path');
 const mongoose = require("mongoose");
 const session = require("express-session");
 const User = require("./Database/user.js");
-const connectDB = require("./Database/connection.js");
-
 const app = express();
+const connectDB = require('./Database/connection');
 connectDB();
+
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
