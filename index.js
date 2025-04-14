@@ -26,7 +26,8 @@ app.use(
 );
 
 app.get("/", (req, res) => {
-  res.send("Your Render app is working! 🎉");
+  
+  res.render("index", { user: req.session.user });
 });
 
 app.get("/wealthtax",  (req, res) => res.render("wealthtax"));
